@@ -54,6 +54,7 @@ Belarusian State University
 HTML Academy
 
 ### Language
+Russian
 English A2+
 Polish A1
 
