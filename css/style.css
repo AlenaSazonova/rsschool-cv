@@ -366,7 +366,6 @@ body.lock {
   .top {
     background-color: #fff;
     color: #414346;
-    border-radius: 0px 8px 0 0;
   }
 }
 
@@ -435,7 +434,6 @@ body.lock {
   .page__buttom-side {
     margin: 0;
     padding: 72px 32px 0 32px;
-    border-radius: 0 0 8px 0px;
   }
 }
 

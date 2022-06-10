@@ -154,17 +154,22 @@
                             <div class="example__item">
                                 <h2 class="example__title title">Code example</h2>
                             </div>
-                            <div class="example__code"> function changer (arr2) {
-                                let empty = []                                
-                                arr2 = arr2.split('')                           
-                                for (let i = 0; i < arr2.length; i++){
-                                    if (arr2[i] != '@') {
-                                        empty.push(arr2[i])
-                                    }else if (arr2[i] === '@') {
-                                        empty.push(`${arr2[i]}!`)
-                                    }
-                                } return empty.join('')
-                            }
+                            <div class="example__code"> 
+                                <pre class="page-code__code">
+                                    <code class="page-code__code-text">
+function changer (arr2) {
+    let empty = []                                
+    arr2 = arr2.split('')                           
+    for (let i = 0; i < arr2.length; i++){
+        if (arr2[i] != '@') {
+            empty.push(arr2[i])
+        }else if (arr2[i] === '@') {
+            empty.push(`${arr2[i]}!`)
+        }
+    } return empty.join('')
+}
+                                    </code>
+                                </pre>
                             </div>
                         </div>
 
