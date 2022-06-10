@@ -1,0 +1,472 @@
+import i18Obj from './translate.js'
+
+//=========переменные===========================================================================================
+// для бургера
+let header__burger = document.querySelector('.header__burger');
+let header_menu = document.querySelector('.menu');
+let back = document.body;
+let header__list = document.querySelector('.menu__list');
+let link__anchor = document.querySelectorAll('.menu__link');
+
+// для portfolio
+const portfolioButton = document.querySelectorAll('.btns__list')
+let autumnPortfolioBtn = document.querySelector('[data-season = autumn]')
+const portfolioImg = document.querySelectorAll('.image__portfolio')
+const butnOne = document.querySelector('.btns__list')
+
+// для перевода
+const langEn = document.querySelector('#lang-en');
+const langRu = document.querySelector('#lang-ru');
+
+// для переключения кнопки языка
+let btnLang = document.querySelectorAll('.btn-translate__btn')
+
+// для смены темы
+let body = document.querySelector('body')
+let themeBTN = document.querySelector('.icon-switcher')
+let logo = document.querySelector('._icon-camera')
+let heroBlock = document.querySelector('.hero')
+let bodyBG = document.querySelector('.hero__body')
+let skillsBlock = document.querySelector('.skills')
+let portfolioBlock = document.querySelector('.portfolio')
+let videoBlock = document.querySelector('.video')
+let priceBlock = document.querySelector('.price')
+let contactsBlock = document.querySelector('.contacts')
+let contactsImage = document.querySelector('.contacts__body')
+let footerBlock = document.querySelector('.footer')
+let cameraIcon = document.querySelector('._icon-camera')
+let instagramIcon = document.querySelector('._icon-instagram')
+let facebookIcon = document.querySelector('._icon-facebook')
+let twitterIcon = document.querySelector('._icon-twitter')
+let pinterestIcon = document.querySelector('._icon-pinterest')
+let videoBtn = document.getElementById('svg')
+let titleForm = document.querySelector('.contacts__title')
+let lightBTN = document.querySelectorAll(`[data-btn = light-btn]`)
+let BtnPhotoPortfolio = document.querySelectorAll(`[data-season]`)
+let titleText = document.querySelectorAll('.title__text')
+let burgerLight = document.querySelector('.header__burger')
+let burgerLightBackground = document.querySelector('.header__menu')
+let inputName = document.querySelector('.form__input-name')
+let inputPhone = document.querySelector('.form__input-phone')
+let inputMessage = document.querySelector('.form__message')
+const playerBack = document.querySelector('.player__controls-item')
+
+// для видеоплеера
+const playerBigBtn = document.querySelector('.player__basic-video-btn')
+const playerBorder = document.querySelector('.player')
+const playerMenu = document.querySelector('.player__controls-body')
+const videoFile = document.querySelector('.player__video')
+const SwictherOnOff = document.querySelector('.player__btn-play')
+const controlVol = document.querySelector('.player__slider-volume[name="volume"]');
+const volumeSwitcher = document.querySelector('.player__btn-volume')
+const progressBarVideo = document.querySelector('.player__slider-video');
+const progressBarVideoBig = document.querySelector('.player__slider-video-big');
+const playerActiveTime = document.getElementById('time-elapsed')
+const playerDurationTime = document.getElementById('time-duration')
+
+
+
+//=========переменные===========================================================================================
+
+
+//=========burger===========================================================================================
+header__burger.onclick = function () {
+    header__burger.classList.toggle('active');
+    header_menu.classList.toggle('active');
+    back.classList.toggle('lock');
+    if (window.innerWidth >= 768) {
+        back.classList.remove('lock');
+    }
+}
+
+header__list.onclick = function () {
+    header__list.classList.remove('active');
+    back.classList.toggle('lock');
+    if (window.innerWidth >= 768) {
+        back.classList.remove('lock');
+    }
+}
+
+// скрываем меню по клику на якорную ссылку
+link__anchor.forEach(element => element.addEventListener('click', () => {
+    header_menu.classList.remove('active');
+    header__burger.classList.remove('active');
+})
+);
+//=========burger===========================================================================================
+
+
+//=========portfolio===========================================================================================
+// переключательно активной кнопки по умолчанию в темной теме
+for (var i = 0; i < portfolioButton.length; i++) {
+    portfolioButton[i].addEventListener("click", function () {
+        var current = document.getElementsByClassName("active-btn");
+        current[0].className = current[0].className.replace(" active-btn", "");
+        this.className += " active-btn";
+    });
+}
+
+// смена картинок в блоке portfolio
+portfolioButton.forEach(element => element.addEventListener('click', () => {
+    let value = element.dataset.season;
+    
+    portfolioImg.forEach((img, index) => img.src = `./img/portfolio/${value}/${index + 1}.jpg`);
+})
+);
+//=========portfolio===========================================================================================
+
+
+
+//=========перевод на 2 языка===========================================================================================
+langEn.addEventListener('click', setLang.bind(null, 'en'));
+langRu.addEventListener('click', setLang.bind(null, 'ru'));
+
+
+function setLang(lang) {
+    if (window.hasOwnProperty('localStorage')){
+        window.localStorage.setItem('lang', lang);
+    }
+
+    for (let key of Object.entries(i18Obj[lang])) {
+        
+        if (`dataset.${key[0]}`) {
+            // let change = document.querySelector(`[data-i18 =${key[0]}]`)
+            // change.innerHTML = `${key[1]}`;
+
+            document
+                .querySelectorAll(`[data-i18 =${key[0]}]`)
+                .forEach((b) => b.innerHTML = `<span>${key[1]}</span>`);
+                
+        }
+    }
+}
+
+
+// переключаем кнопку языка
+for (var i = 0; i < btnLang.length; i++) {
+    btnLang[i].addEventListener("click", function () {
+
+        var current = document.getElementsByClassName("gold");
+        current[0].className = current[0].className.replace(" gold", "");
+        this.className += " gold";
+        
+    });
+}
+
+function turnBtnLang (lang) {
+    if (lang == 'ru') {
+        let enBtn = document.getElementById("lang-en")
+        let ruBtn = document.getElementById("lang-ru")
+        enBtn.classList.remove("gold");
+        ruBtn.classList.add("gold");
+        console.log(btnLang[0])
+    }
+}
+//=========перевод на 2 языка===========================================================================================
+
+
+
+//=========смена темы===========================================================================================
+themeBTN.addEventListener('click', themeChanger.bind(null, 'dark'));
+
+function themeChanger () {
+
+    if (themeBTN.classList.contains('_icon-sun-theme')) {
+        window.localStorage.setItem('theme', 'light');
+    } else if (themeBTN.classList.contains('_icon-moon-theme')) {
+        window.localStorage.setItem('theme', 'dark');
+    }    
+
+    buttonLighTheme();
+    lightTheme();
+}
+
+
+function lightTheme () {
+    body.classList.toggle('body-fontColor')
+    themeBTN.classList.toggle('_icon-sun-theme')
+    themeBTN.classList.toggle('_icon-moon-theme')
+    heroBlock.classList.toggle('hero_light')
+    bodyBG.classList.toggle('hero__body_light')
+    skillsBlock.classList.toggle('skills_light')
+    portfolioBlock.classList.toggle('portfolio_light')
+    videoBlock.classList.toggle('video_light')
+    priceBlock.classList.toggle('price_light')
+    contactsImage.classList.toggle('contacts__body_light')
+    contactsBlock.classList.toggle('contacts_light')
+    footerBlock.classList.toggle('footer_light')
+    cameraIcon.classList.toggle('white-theme-icon')
+    instagramIcon.classList.toggle('white-theme-icon')
+    facebookIcon.classList.toggle('white-theme-icon')
+    twitterIcon.classList.toggle('white-theme-icon')
+    pinterestIcon.classList.toggle('white-theme-icon')
+    burgerLight.classList.toggle('burger-light')
+    burgerLightBackground.classList.toggle('menu-light')
+    inputName.classList.toggle('input-name-light')
+    inputPhone.classList.toggle('input-phone-light')
+    inputMessage.classList.toggle('input-message-light')
+    playerBack.classList.toggle('player__controls-item_light')
+    playerBigBtn.classList.toggle('_icon-video-btn_light')
+
+    titleText.forEach((b) => b.classList.toggle('text-light'))
+
+    // if (videoBtn.id === 'svg-light') {
+    //     videoBtn.id = 'svg';
+    // } else if (videoBtn.id === 'svg'){
+    //     videoBtn.id = 'svg-light'
+    // }
+    
+    titleForm.classList.toggle('contacts__title_light')
+    lightBTN.forEach((b) => b.classList.toggle('button__active'))
+    lightBTN.forEach((b) => b.classList.toggle('button__light'))
+
+    if (localStorage.getItem('theme') == 'dark') {
+        console.log('dark')
+        buttonDarkTheme()
+    }
+
+    // возвращаем всегда на картинку осени при смене темы, чтобы кнопки совпадали
+    portfolioImg.forEach((img, index) => img.src = `./img/portfolio/autumn/${index + 1}.jpg`);
+
+}
+
+    function buttonLighTheme () {
+        portfolioButton.forEach(b => b.classList.toggle('button'))
+        portfolioButton.forEach(b => b.classList.toggle('button__non-active-light')) // класс вместо button
+        portfolioButton.forEach(b => b.classList.remove('active-btn'))
+        
+
+
+        autumnPortfolioBtn.classList.add('button__active_light')
+
+        for (var i = 0; i < portfolioButton.length; i++) {
+        portfolioButton[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("button__active_light");
+            current[0].className = current[0].className.replace(" button__active_light", "");
+            this.className += " button__active_light";
+    });
+}
+    }
+
+function buttonDarkTheme() {
+    autumnPortfolioBtn.classList.add('active-btn')
+    portfolioButton.forEach(b => b.classList.remove('button__active_light'))
+    autumnPortfolioBtn.classList.remove('button__active_light')
+
+    for (var i = 0; i < portfolioButton.length; i++) {
+        portfolioButton[i].addEventListener("click", function () {
+        var current = document.getElementsByClassName("active-btn");
+        current[0].className = current[0].className.replace(" active-btn", "");
+        this.className += " active-btn";
+    });
+}
+
+}
+//=========смена темы===========================================================================================
+
+
+
+//=========видео плеер===========================================================================================
+// события
+// звук...
+controlVol.addEventListener('input', updateVol);
+controlVol.addEventListener('change', updateVol);
+controlVol.addEventListener('input', updateControlVol);
+volumeSwitcher.addEventListener('click', updateControlVol);
+volumeSwitcher.addEventListener('click', turnOnOffVol);
+videoFile.addEventListener('timeupdate', updateProgress);
+progressBarVideoBig.addEventListener('input', skipAhead);
+progressBarVideo.addEventListener('input', skipAhead);
+/// бегунок видео
+controlVol.addEventListener('input', fillInputLineVolume)
+progressBarVideo.addEventListener('input', fillInputLineVideoScroll)
+progressBarVideoBig.addEventListener('input', fillInputLineVideoScroll)
+//изменение времени
+playerBigBtn.addEventListener('click', timeChangerDuration);
+//+1 одно изменение времени засунула в updateProgress(), не смогла сделать отдельно
+
+
+
+playerBigBtn.onclick = () => {
+    playerBorder.classList.add('player__border')
+    playerMenu.style.display = 'block'
+    playerBigBtn.style.display = 'none';
+
+    videoFile.play()
+    SwictherOnOff.classList.add('_icon-pause')
+    SwictherOnOff.classList.remove('_icon-play')
+
+    initializeVideo()
+}; 
+
+
+
+SwictherOnOff.onclick = () => {
+    if (SwictherOnOff.classList.contains('_icon-pause')) {
+        SwictherOnOff.classList.add('_icon-play')
+        SwictherOnOff.classList.remove('_icon-pause')
+        videoFile.pause()
+        playerBigBtn.style.display = 'block';
+    } else {
+        SwictherOnOff.classList.add('_icon-pause')
+        SwictherOnOff.classList.remove('_icon-play')
+        playerBigBtn.style.display = 'none';
+        videoFile.play()
+    }
+}
+
+
+
+
+// звук
+function updateVol() {
+    var volume = this.value;
+    videoFile.volume = volume;
+
+    if (volumeSwitcher.classList.contains("_icon-mute")) {
+        videoFile.volume = 0;
+    }
+
+    if (controlVol.volume != 0 && volumeSwitcher.classList.contains("_icon-mute")){
+        volumeSwitcher.classList.remove("_icon-mute");
+        volumeSwitcher.classList.add("_icon-volume");
+        videoFile.volume = volume;
+    }
+
+    if (controlVol.value == 0 && volumeSwitcher.classList.contains("_icon-volume")) {
+        volumeSwitcher.classList.add("_icon-mute");
+        volumeSwitcher.classList.remove("_icon-volume");
+    }
+}
+
+function turnOnOffVol () {
+    var volume = controlVol.value;
+
+    if (volumeSwitcher.classList.contains("_icon-volume")) {
+        volumeSwitcher.classList.remove("_icon-volume");
+        volumeSwitcher.classList.add("_icon-mute");
+    } else if (volumeSwitcher.classList.contains("_icon-mute")) {
+        volumeSwitcher.classList.remove("_icon-mute");
+        volumeSwitcher.classList.add("_icon-volume");
+
+        videoFile.volume = volume;
+    }
+}
+
+
+function updateControlVol () {
+    var volume = this.value;
+    videoFile.volume = volume;
+}
+
+//устала, пишу так
+function onSlideTurnOff () {
+    if (controlVol.value == 0) {
+        volumeSwitcher.classList.add("_icon-mute");
+        volumeSwitcher.classList.remove("_icon-volume");
+    }
+}
+
+
+
+/// бегунок видео
+// устанавливает макс значение бегунка в соответствии с длительностью видео
+function initializeVideo() {
+    const videoDuration = Math.floor(videoFile.duration);
+    progressBarVideoBig.setAttribute('max', videoDuration);
+    progressBarVideo.setAttribute('max', videoDuration);
+}
+
+// обновляет положение бегунка в зависимости от времени видео, проигрываемого прямо сейчас
+function updateProgress() {
+    progressBarVideoBig.value = Math.floor(videoFile.currentTime);
+    progressBarVideo.value = Math.floor(videoFile.currentTime);
+
+    let progress = videoFile.currentTime / videoFile.duration * 100
+    let color = `linear-gradient(90deg, #bdae82 ${progress}%, #c5c1c1 ${progress}%)`;
+    progressBarVideoBig.style.backgroundImage = color;
+    progressBarVideo.style.backgroundImage = color;
+
+    // обновитель времени, не смогла сделать отдельно
+    let activeTime = progressBarVideo.value
+
+    if (activeTime <10) {
+        playerActiveTime.innerHTML = `00:0${activeTime}`
+    } else {
+        playerActiveTime.innerHTML = `00:${activeTime}`
+    }
+}
+
+
+//меняет момент воспроизведения видео по клику бегунком
+function skipAhead(event) {
+    const skipTo = event.target.dataset.progressBarVideoBig
+        ? event.target.dataset.progressBarVideoBig
+        : event.target.value;
+
+    videoFile.currentTime = skipTo;
+    progressBarVideoBig.value = skipTo;
+    progressBarVideo.value = skipTo;
+}
+
+
+
+// раскрашиваем inputVolume
+function fillInputLineVolume () {
+
+    let index = this.value * 100
+
+    let color = `linear-gradient(90deg, #bdae82 ${index}%, #c5c1c1 ${index}%)`;
+    this.style.backgroundImage = color;
+}
+
+
+// раскрашиваем inputVideo
+function fillInputLineVideoScroll() {
+
+    let index = this.value / (videoFile.duration / 100)
+    console.log(index)
+
+    let color = `linear-gradient(90deg, #bdae82 ${index}%, #c5c1c1 ${index}%)`;
+    this.style.backgroundImage = color;
+}
+
+
+// изменение времени
+// нажание на большую play запишет продолжительность видео
+function timeChangerDuration () {
+    let time = Math.floor(videoFile.duration)
+    playerDurationTime.innerHTML = `00:${time}`
+
+}
+
+//=========видео плеер===========================================================================================
+
+
+
+//=========localStorage===========================================================================================
+// cохранение в localStorage
+function setLocalStorage() {
+    localStorage.setItem('lang', lang);
+}
+window.addEventListener('beforeunload', setLocalStorage)
+
+function getLocalStorage() {
+    if (localStorage.getItem('lang')) {
+        const lang = localStorage.getItem('lang');
+        setLang(lang);
+        turnBtnLang(lang)
+    } 
+}
+
+function getLocalStorage2() {
+    if (localStorage.getItem('theme') == 'light') {
+        const theme = localStorage.getItem('lang');
+        lightTheme();
+        buttonLighTheme();
+        // portfolioActiveBTN(theme)
+    }
+}
+window.addEventListener('load', getLocalStorage)
+window.addEventListener('load', getLocalStorage2);
+//=========localStorage===========================================================================================
