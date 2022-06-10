@@ -194,6 +194,47 @@ body {
   }
 }
 
+
+
+.footer__container {
+  height: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #414346;
+  margin: 72px 0 0 0;
+  padding: 0 32px;
+}
+.footer__year {
+  color: #fff;
+}
+.github__link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.github__name {
+  color: #fff;
+  padding: 0 0 0 16px;
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+}
+.github__name:hover {
+  color: #8b96a7;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+
 .page {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
